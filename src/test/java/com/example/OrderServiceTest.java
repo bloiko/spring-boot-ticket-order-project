@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.order.pojos.User;
 import com.example.order.service.OrderService;
 import com.example.order.pojos.Order;
 import com.example.order.repository.OrderRepository;
@@ -30,7 +31,8 @@ public class OrderServiceTest {
     @Test
     public void testSend() {
         Date date = new Date(2022, 20, 20);
-        Order order = buildOrder(date, 1L, "source", "destination", "testUsername");
+        User user = User.builder().id(0L).username("testUsername1").password("password").build();
+        Order order = buildOrder(date, 1L, "source", "destination", user);
         given(orderRepository.save(order)).willReturn(order);
 
         Order sendedOrder = orderService.order(order);
@@ -44,8 +46,9 @@ public class OrderServiceTest {
     @Test
     public void testGetAllOrders() {
         Date date = new Date(2022, 20, 20);
-        Order order = buildOrder(date, 1L, "source", "destination", "testUsername");
-        Order order2 = buildOrder(date, 2L, "source2", "destination2", "testUsername2");
+        User user = User.builder().id(0L).username("testUsername1").password("password").build();
+        Order order = buildOrder(date, 1L, "source", "destination", user);
+        Order order2 = buildOrder(date, 2L, "source2", "destination2", user);
 
         given(orderRepository.findAll()).willReturn(Lists.newArrayList(order, order2));
 

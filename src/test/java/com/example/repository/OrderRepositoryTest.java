@@ -1,12 +1,15 @@
-package com.example;
+package com.example.repository;
 
+import com.example.DbConfiguration;
 import com.example.order.pojos.Order;
 import com.example.order.pojos.Ticket;
+import com.example.order.pojos.User;
 import com.example.order.repository.OrderRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,16 +24,17 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(
         classes = { DbConfiguration.class },
         loader = AnnotationConfigContextLoader.class)
-@Transactional
 public class OrderRepositoryTest {
 
     @Autowired
     private OrderRepository orderRepository;
 
     @Test
-    public void givenStudent_whenSave_thenGetOk() {
+    @Transactional
+    public void givenOrder_whenSave_thenGetOk() {
         Date date = new Date(2022, 20, 20);
-        Order order = buildOrder(date, 1L, "source", "destination", "testUsername");
+        User user = User.builder().id(5L).username("testUsername1").password("password").build();
+        Order order = buildOrder(date, 5L, "source", "destination", user);
 
         orderRepository.save(order);
 

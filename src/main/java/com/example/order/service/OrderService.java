@@ -23,7 +23,6 @@ public class OrderService {
 
     public Order order(Order order) {
         log.info("Order {} with was taken into handling", order);
-        SecurityContextHolder.getContext().getAuthentication();
         return orderRepository.save(order);
     }
 
