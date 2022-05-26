@@ -1,5 +1,7 @@
-package com.example;
+package com.example.order;
 
+import com.example.DbConfiguration;
+import com.example.SpringBootProjectApplication;
 import com.example.order.OrderController;
 import com.example.order.pojos.Order;
 import com.example.order.pojos.Ticket;
@@ -60,26 +62,6 @@ public class OrderControllerIT {
         List<Order> all = orderRepository.findAll();
         assertTrue(all.stream()
                 .anyMatch(orderTemp -> areOrdersEqual(orderTemp, order)));
-    }
-
-
-    @Transactional
-    @Rollback
-    @Test
-    public void testRetrieveOrdersAsync() {
-        setGrantedAuthority();
-        Date date = new Date(2022, 20, 20);
-        User user = User.builder().id(10L).username("testUsername1").password("password").build();
-        Order order1 = buildOrder(date, 1, "source", "destination", user);
-        Order order2 = buildOrder(date, 2, "source2", "destination2", user);
-        Order order3 = buildOrder(date, 3, "source3", "destination3", user);
-        List<Order> orders = Lists.newArrayList(order1, order2, order3);
-        orders.parallelStream()
-                .map(order -> orderController.orderBook(order))
-                .collect(Collectors.toList());
-
-        List<Order> all = orderRepository.findAll();
-        assertEquals(all.size(), 3);
     }
 
     private void setGrantedAuthority() {

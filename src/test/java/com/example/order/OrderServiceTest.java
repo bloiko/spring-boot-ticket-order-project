@@ -1,4 +1,4 @@
-package com.example;
+package com.example.order;
 
 import com.example.order.pojos.User;
 import com.example.order.service.OrderService;
@@ -29,7 +29,7 @@ public class OrderServiceTest {
     private OrderRepository orderRepository;
 
     @Test
-    public void testSend() {
+    public void testSave() {
         Date date = new Date(2022, 20, 20);
         User user = User.builder().id(0L).username("testUsername1").password("password").build();
         Order order = buildOrder(date, 1L, "source", "destination", user);
@@ -56,7 +56,6 @@ public class OrderServiceTest {
 
         then(orders)
                 .hasSize(2);
-
         Iterator<Order> orderIterator = orders.iterator();
         then(orderIterator.next())
                 .isEqualTo(order);

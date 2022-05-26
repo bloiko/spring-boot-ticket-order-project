@@ -1,15 +1,13 @@
-package com.example.repository;
+package com.example.order.repository;
 
 import com.example.DbConfiguration;
 import com.example.order.pojos.Order;
 import com.example.order.pojos.Ticket;
 import com.example.order.pojos.User;
-import com.example.order.repository.OrderRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +39,7 @@ public class OrderRepositoryTest {
         List<Order> all = orderRepository.findAll();
         Order order2 = all.get(0);
         Ticket ticket2 = order2.getTicket();
-        assertEquals("testUsername", order2.getUser().getUsername());
+        assertEquals("testUsername1", order2.getUser().getUsername());
         assertEquals("source", ticket2.getSource());
         assertEquals("destination", ticket2.getDestination());
         assertEquals(date, ticket2.getDate());
