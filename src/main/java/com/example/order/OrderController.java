@@ -14,14 +14,14 @@ public class OrderController {
 
     @PostMapping("/order")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Order orderBook(@RequestBody Order order) {
-        return orderService.order(order);
+    public void orderBook(@RequestBody Order order) {
+        orderService.order(order);
     }
 
     @PutMapping("/order")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Order updateOrder(@RequestBody Order order) {
-        return orderService.updateOrder(order);
+    public boolean updateOrder(@RequestBody Order order) {
+        return orderService.updateOrder(order) != null;
     }
 
     @GetMapping("/order/{orderId}")
@@ -38,7 +38,7 @@ public class OrderController {
 
     @GetMapping("/orders")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Iterable<Order> getBooks() {
+    public Iterable<Order> getOrders() {
         return orderService.getAllOrders();
     }
 }
